@@ -213,21 +213,23 @@ function renderSpecificList(list){
     ulTag.style.paddingLeft ='0px';
     task.innerHTML ='';
 
-    list.forEach( (todo) =>{
-        const liTag = document.createElement('li');
-        liTag.classList.add('todos');
-        if (todo.class =='completed'){
-            liTag.classList.add('completed');
-            console.log(`${todo.value} tag에 completed 추가됨`)
-        }        
-        liTag.setAttribute('data-key', todo.value);
-        console.log(liTag)
-        // 버튼들은 삭제해서 안 만든다.  
-        liTag.innerHTML =`
-            <div class="todo ${todo.class}">${todo.value}</div>
-        `;
-        ulTag.appendChild(liTag);  
-        
-    });
+    if(list.length >0){
+        list.forEach( (todo) =>{
+            const liTag = document.createElement('li');
+            liTag.classList.add('todos');
+            if (todo.class =='completed'){
+                liTag.classList.add('completed');
+                console.log(`${todo.value} tag에 completed 추가됨`)
+            }        
+            liTag.setAttribute('data-key', todo.value);
+            console.log(liTag)
+            // 버튼들은 삭제해서 안 만든다.  
+            liTag.innerHTML =`
+                <div class="todo ${todo.class}">${todo.value}</div>
+            `;
+            ulTag.appendChild(liTag);  
+            
+        });
+    }
     task.appendChild(ulTag);    
 }
