@@ -198,7 +198,14 @@ function handleDeleteButtonClick(e) {
         doneList.splice(doneIndex,1);        
     }    
 
-    renderList();
+    // 삭제 후 변경된 리스트만 다시 렌더링합니다.
+    if (tabs.querySelector('.ing').classList.contains('bold')) {
+        renderSpecificList('ingList');
+    } else if (tabs.querySelector('.done').classList.contains('bold')) {
+        renderSpecificList('doneList');
+    } else {
+        renderList();
+    }
 }
 
 
@@ -207,7 +214,7 @@ function renderSpecificList(list){
     if(list == 'ingList'){
         list = ingList;  //최신의 ingList 자료를 넘겨준다.
     }
-    if(list = 'doneList'){
+    if(list == 'doneList'){
         list = doneList;
     }
     const existingUlTag = task.querySelector('ul');
