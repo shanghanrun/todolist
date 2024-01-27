@@ -190,7 +190,7 @@ function handleDeleteButtonClick(e) {
         ingList.splice(ingIndex,1);        
     }    
     if (doneIndex != -1){        
-        doneList.splice(ingIndex,1);        
+        doneList.splice(doneIndex,1);        
     }    
 
     renderList();
