@@ -1,10 +1,9 @@
-
 const underline = document.querySelector('#underline')
 
 const tabs = document.querySelectorAll('.tab')
-const todoList=[];
-const ingList=[];
-const doneList=[];
+let todoList=[];
+let ingList=[];
+let doneList=[];
 const input = document.querySelector('input')
 const addButton = document.querySelector('#add')
 
@@ -25,23 +24,24 @@ function indicator(e){
     underline.style.borderRadius = '10px';
 
     underline.style.left = e.currentTarget.offsetLeft + 'px';
-    console.log(underline.style.left);
+    // console.log(underline.style.left);
 
     underline.style.top = e.currentTarget.offsetTop  + 'px';
-    console.log(underline.style.top);
+    // console.log(underline.style.top);
 
     underline.style.width = e.currentTarget.offsetWidth  + 'px';
 
     // 해당 탭의 List를 보여주기
-    if(e.currentTarget.classList.contains('all')){ 
+    if(e.currentTarget.id == 'all'){ 
         // e.currentTarget.class =='all'로 하면 오류
         // e.currentTarget.class.includes('all')도 오류
         // e.currentTarget.classList.includes('all')해도 오류
         // 그 이유는 DOMTokenList는 '배열유사객체' contains()로 접근해야 된다.
+        
         renderList();
-    } else if(e.currentTarget.classList.contains('ing')){
+    } else if(e.currentTarget.id == 'ing'){
         renderSpecificList('ingList');  //문자열을 인자로 보낸다.
-    } else if(e.currentTarget.classList.contains('done')){
+    } else if(e.currentTarget.id == 'done'){
         renderSpecificList('doneList')
     }    
 }
@@ -66,20 +66,31 @@ function indicator(e){
 addButton.addEventListener('click', getTodo)
 input.addEventListener('keyup', function(e){
     if(e.key =='Enter'){
-        let item = {value: input.value, class: ''}
-        todoList.push(item)
-        ingList.push(item) // 여기에도 넣는다.       
-        input.value=''
-        renderList()
+        let item = {value: input.value, class: 'normal'}
+
+        //이미 존재하는 동일한 값이 들어오면 return으로 하면...
+        //이벤트리스너는 함수가 아니라서.. 이상하고
+        // 차라리 이미 존재하지 않는 값이 들어왔을 경우로 한다.
+        const i = todoList.findIndex(todo => todo.value == input.value );
+        if (i == -1){  // 해당 인덱스 값이 존재하지 않으면 추가
+            todoList.push({...item})  //객체 독립
+            ingList.push({...item}) // 여기에도 넣는다.       
+            input.value=''
+            renderList()
+        }
     }    
 })
 
 function getTodo(){
-    let item = {value: input.value, class: ''}
-    todoList.push(item)
-    ingList.push(item) // 여기에도 넣는다.   
-    input.value=''
-    renderList()
+    let item = {value: input.value, class: 'normal'}
+    // class값을 null로 하지 않고 넣어준다.
+    const i = todoList.findIndex(todo => todo.value == input.value );
+    if (i == -1){ // 해당 인덱스 값이 존재하지 않으면 추가
+        todoList.push({...item})
+        ingList.push({...item})       
+        input.value=''
+        renderList()
+    }
 }
 
 const task = document.querySelector('.task')
@@ -103,10 +114,10 @@ function renderList(){
         liTag.classList.add('todos');
         if (todo.class =='completed'){
             liTag.classList.add('completed');
-            console.log(`${todo.value} tag에 completed 추가됨`)
+            // console.log(`${todo.value} tag에 completed 추가됨`)
         }        
         liTag.setAttribute('data-key', todo.value);
-        console.log(liTag)
+        // console.log(liTag)
         liTag.innerHTML =`
             <div class="todo ${todo.class}">${todo.value}</div>
             <div>
@@ -134,6 +145,10 @@ function renderList(){
     deleteButtons.forEach(deleteButton => {
         deleteButton.addEventListener('click', handleDeleteButtonClick);
     });
+
+    console.log('todoList: ', todoList);
+    console.log('ingList: ', ingList);
+    console.log('doneList: ', doneList);
 }
 
 // Check 버튼 클릭 시 처리
@@ -145,23 +160,21 @@ function handleCheckButtonClick(e) {
     let todoIndex; 
     let ingIndex;
     //
-    // todoList에서 해당 key 값을 가진 객체를 찾습니다.
-    const targetTodo = todoList.find(todo => todo.value === key);
-    
-    if(targetTodo){
-        targetTodo.class ='completed';
-        todoIndex = todoList.indexOf(targetTodo);
-        ingIndex = ingList.indexOf(targetTodo);
-        console.log("todoIndex", todoIndex)
-    }
-    
+    // todoList에서 해당 key 값을 가진 객체를 찾는다.
+    const targetTodo = todoList.find(todo => todo.value == key);
+    todoIndex = todoList.findIndex(todo => todo.value ==key);
+    ingIndex = ingList.findIndex(todo => todo.value == key);
+    // findIndex메소드는 없으면 -1을 반환한다.
     if(todoIndex != -1){
-        //중복해서 들어가지 않도록
+        targetTodo.class ='completed';
+
+        // check를 여러번 누를 때, done에 중복되어 들어가지 않도록
+        // done에 동일한 값이 없을 때만 추가하도록 
         if (!doneList.some(todo=> todo.value == key)){
-            doneList.push(targetTodo); 
-        }               
+            doneList.push({...targetTodo}); //객체 독립 
+        } 
     }
-    if(ingIndex != -1){
+    if(ingIndex != -1){  // 리스트안에 요소가 있을 때 삭제 메소드사용
         ingList.splice(ingIndex, 1)
     }
 
@@ -174,49 +187,53 @@ function handleCheckButtonClick(e) {
 function handleDeleteButtonClick(e) {
     const button = e.currentTarget;
     const liTag = button.closest('li');
-    const key = liTag.getAttribute('data-key');  
+    const key = liTag.getAttribute('data-key'); 
+     
     let todoIndex;
     let ingIndex;
     let doneIndex;
 
-    // todoList에서 해당 key 값을 가진 객체를 찾습니다.
-    const targetTodo = todoList.find(todo => todo.value === key);
+    // todoList에서 해당 key 값을 가진 객체를 찾는다
+    const targetTodo = todoList.find(todo => todo.value == key);
+    console.log('delete 키가 눌림')
+    console.log('key : ', key) // 1
+    console.log('삭제되는 아이템의 객체: ', targetTodo ) //{해당객체}
+    console.log('삭제되는 아이템의 value', targetTodo.value) // 1
 
-    if(targetTodo){
-        todoIndex = todoList.indexOf(targetTodo);
-        ingIndex = ingList.indexOf(targetTodo);
-        doneIndex = doneList.indexOf(targetTodo);
+    // 객체형태의 요소를 담은 리스트의 경우, 객체요소를 제거하려면
+    // 인덱스로 접근하면 안되고, filter함수로 접근해야 된다.
+
+    if(targetTodo){  // 삭제되는 객체가 존재하면
+        todoList = todoList.filter( todo => todo.value != key)
+        ingList = ingList.filter( todo => todo.value != key)
+        doneList = doneList.filter( todo => todo.value != key)
+        // list.filter로 된 겻은 새로운 배열을 반환하는 것이고,
+        // 기존 배열을 변화시키는 것이 아니다.
+
+        //아니면 위에서 처럼, findIndex하고, splice로 삭제해도 된다.
     }
+    console.log(`${key} 삭제된 후.....`)
+    console.log('todoList: ', todoList)
+    console.log('ingList: ', ingList)
+    console.log('doneList: ', doneList)
 
-    if(todoIndex != -1){
-        todoList.splice(todoIndex, 1);        
-    }  
-    if (ingIndex != -1){        
-        ingList.splice(ingIndex,1);        
-    }    
-    if (doneIndex != -1){        
-        doneList.splice(doneIndex,1);        
-    }    
+    renderList()
 
-    // 삭제 후 변경된 리스트만 다시 렌더링합니다.
-    if (tabs.querySelector('.ing').classList.contains('bold')) {
-        renderSpecificList('ingList');
-    } else if (tabs.querySelector('.done').classList.contains('bold')) {
-        renderSpecificList('doneList');
-    } else {
-        renderList();
-    }
 }
 
 
 
-function renderSpecificList(list){
-    if(list == 'ingList'){
+function renderSpecificList(str){
+    let list;
+    if(str == 'ingList'){
         list = ingList;  //최신의 ingList 자료를 넘겨준다.
+        console.log('ingList: ', list)
     }
-    if(list == 'doneList'){
+    if(str == 'doneList'){
         list = doneList;
+        console.log('doneList: ', list)
     }
+    
     const existingUlTag = task.querySelector('ul');
     if (existingUlTag) {
         existingUlTag.remove();
@@ -230,10 +247,8 @@ function renderSpecificList(list){
         list.forEach( (todo) =>{
             const liTag = document.createElement('li');
             liTag.classList.add('todos');
-            //아래 불필요한 것 삭제함//                   
-            liTag.setAttribute('data-key', todo.value);
-            console.log(liTag)
-            // 버튼들은 삭제해서 안 만든다.  
+            //아래 불필요한 것 삭제함//   
+            // 버튼들은 안 만든다.  
             liTag.innerHTML =`
                 <div class="todo ${todo.class}">${todo.value}</div>
             `;
