@@ -157,7 +157,7 @@ function handleCheckButtonClick(e) {
     
     if(todoIndex != -1){
         //중복해서 들어가지 않도록
-        if !(doneList.find(todo=> todo.value == key)){
+        if (!doneList.some(todo=> todo.value == key)){
             doneList.push(targetTodo); 
         }               
     }
