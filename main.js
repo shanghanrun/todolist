@@ -40,9 +40,9 @@ function indicator(e){
         // 그 이유는 DOMTokenList는 '배열유사객체' contains()로 접근해야 된다.
         renderList();
     } else if(e.currentTarget.classList.contains('ing')){
-        renderSpecificList(ingList);
+        renderSpecificList('ingList');  //문자열을 인자로 보낸다.
     } else if(e.currentTarget.classList.contains('done')){
-        renderSpecificList(doneList)
+        renderSpecificList('doneList')
     }    
 }
 
@@ -204,6 +204,12 @@ function handleDeleteButtonClick(e) {
 
 
 function renderSpecificList(list){
+    if(list == 'ingList'){
+        list = ingList;  //최신의 ingList 자료를 넘겨준다.
+    }
+    if(list = 'doneList'){
+        list = doneList;
+    }
     const existingUlTag = task.querySelector('ul');
     if (existingUlTag) {
         existingUlTag.remove();
