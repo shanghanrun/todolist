@@ -37,6 +37,7 @@ function indicator(e){
         // e.currentTarget.class.includes('all')도 오류
         // e.currentTarget.classList.includes('all')해도 오류
         // 그 이유는 DOMTokenList는 '배열유사객체' contains()로 접근해야 된다.
+        //그런데, class보다 id로 확실하게 분리하기로 했다.
         
         renderList();
     } else if(e.currentTarget.id == 'ing'){
@@ -59,8 +60,6 @@ function indicator(e){
 // 전체 탭을 누르면 다시 전체 아이템으로 돌아온다.
 
 //1. 유저 값 입력을 받아오기. input태그, 버튼 태그를 받아옴
-
-
 
 
 addButton.addEventListener('click', getTodo)
@@ -193,7 +192,6 @@ function handleCheckButtonClick(e) {
 }
 
 
-
 // Delete 버튼 클릭 시 처리
 function handleDeleteButtonClick(e) {
     const button = e.currentTarget;
@@ -235,18 +233,16 @@ function handleDeleteButtonClick(e) {
     console.log('doneList: ', doneList)
 
     renderList()
-
 }
 
 
-
-function renderSpecificList(str){
+function renderSpecificList(type){
     let list;
-    if(str == 'ingList'){
+    if(type == 'ingList'){
         list = ingList;  //최신의 ingList 자료를 넘겨준다.
         console.log('ingList: ', list)
     }
-    if(str == 'doneList'){
+    if(type == 'doneList'){
         list = doneList;
         console.log('doneList: ', list)
     }
