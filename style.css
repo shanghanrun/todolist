@@ -1,0 +1,93 @@
+body{
+    margin:0;
+    background-image: url('image/workplace.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container{
+    background-color: rgb(255, 251, 251, 0.7);
+    min-height: 100vh;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    /* 위 아래쪽에 백그라운드가 보이게 하기  위해 */
+    margin: 100px;
+    border-radius: 20px;    
+}
+.task-area{
+    margin-top: 10px;
+    border: 2px solid rgb(176, 176, 191);
+    border-radius: 10px;
+    padding: 2px;
+}
+input{
+    height: 40px;
+    width: 400px;
+    border-radius: 5px;
+    border-color: #fff;
+}
+#add{
+    margin: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    font-weight: bold;
+    background-color: rgb(70, 118, 251);
+}
+.check{
+    /* margin: 10px; */
+    height: 30px;
+    width: 70px;
+    border-radius: 20px;
+    /* font-weight: bold; */
+    background-color: rgb(133, 255, 133, 0.6);
+}
+.delete{
+    /* margin: 10px; */
+    margin-left: 10px;
+    height: 30px;
+    width: 70px;
+    border-radius: 20px;
+    /* font-weight: bold; */
+    background-color: rgb(249, 95, 133, 0.8);
+}
+#underline{
+    position: absolute;
+    padding:0;
+    width:0;
+    top:0;
+    left:1;
+    height: 57px;
+    width: 10px;
+    background-color: rgba(6, 144, 250, 0.3);
+    transition:0.4s;
+    border-top-left-radius: 10px;
+}
+
+.task-tabs{
+    display:flex;
+    justify-content: column;
+    border-bottom: 1px solid lightgray;
+    position:relative;
+}
+.task-tabs div{
+    padding: 1em;
+}
+.bold{
+    font-weight: bold;
+}
+
+.todos{
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    border-bottom: 1px solid rgb(163, 163, 163);
+    background-color: rgb(211, 219, 202);
+    border-radius: 10px;
+}
+.todo{
+    font-weight:700;
+}
+.completed{
+    /* text-decoration: line-through; */
+    color: rgb(135, 144, 231);
+}
