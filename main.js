@@ -155,7 +155,10 @@ function handleCheckButtonClick(e) {
         console.log("todoIndex", todoIndex)
     }
     
-    if(todoIndex != -1){        
+    if(todoIndex != -1){
+        //중복해서 들어가지 않도록
+        if (doneList.find(todo=> todo.value == key)) return;
+
         doneList.push(targetTodo);       
     }
     if(ingIndex != -1){
