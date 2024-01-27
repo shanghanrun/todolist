@@ -172,6 +172,7 @@ function handleDeleteButtonClick(e) {
     const key = liTag.getAttribute('data-key');  
     let todoIndex;
     let ingIndex;
+    let doneIndex;
 
     // todoList에서 해당 key 값을 가진 객체를 찾습니다.
     const targetTodo = todoList.find(todo => todo.value === key);
@@ -179,6 +180,7 @@ function handleDeleteButtonClick(e) {
     if(targetTodo){
         todoIndex = todoList.indexOf(targetTodo);
         ingIndex = ingList.indexOf(targetTodo);
+        doneIndex = doneList.indexOf(targetTodo);
     }
 
     if(todoIndex != -1){
@@ -186,6 +188,9 @@ function handleDeleteButtonClick(e) {
     }  
     if (ingIndex != -1){        
         ingList.splice(ingIndex,1);        
+    }    
+    if (ingIndex != -1){        
+        doneList.splice(ingIndex,1);        
     }    
 
     renderList();
