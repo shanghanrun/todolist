@@ -114,6 +114,8 @@ function renderList(){
                 <button class="delete">삭제</button>
             </div>
         `;
+        // liTag에도 이벤트리스너를 달아서, check 반응하게만든다.
+        liTag.addEventListener('click', handleCheckButtonClick);[]
         ulTag.appendChild(liTag);  
         
     });
