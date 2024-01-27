@@ -157,9 +157,9 @@ function handleCheckButtonClick(e) {
     
     if(todoIndex != -1){
         //중복해서 들어가지 않도록
-        if (doneList.find(todo=> todo.value == key)) return;
-
-        doneList.push(targetTodo);       
+        if !(doneList.find(todo=> todo.value == key)){
+            doneList.push(targetTodo); 
+        }               
     }
     if(ingIndex != -1){
         ingList.splice(ingIndex, 1)
