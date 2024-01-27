@@ -75,7 +75,9 @@ input.addEventListener('keyup', function(e){
 })
 
 function getTodo(){
-    todoList.push(input.value)
+    let item = {value: input.value, class: ''}
+    todoList.push(item)
+    ingList.push(item) // 여기에도 넣는다.   
     input.value=''
     renderList()
 }
