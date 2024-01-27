@@ -223,10 +223,7 @@ function renderSpecificList(list){
         list.forEach( (todo) =>{
             const liTag = document.createElement('li');
             liTag.classList.add('todos');
-            if (todo.class =='completed'){
-                liTag.classList.add('completed');
-                console.log(`${todo.value} tag에 completed 추가됨`)
-            }        
+            //아래 불필요한 것 삭제함//                   
             liTag.setAttribute('data-key', todo.value);
             console.log(liTag)
             // 버튼들은 삭제해서 안 만든다.  
