@@ -66,30 +66,41 @@ function indicator(e){
 addButton.addEventListener('click', getTodo)
 input.addEventListener('keyup', function(e){
     if(e.key =='Enter'){
-        let item = {value: input.value, class: 'normal'}
+        const inputValue = input.value.trim(); 
+        // 좌우 불필요한 공백문자열 제거
+        const item = {value: inputValue, class: 'normal'}
 
         //이미 존재하는 동일한 값이 들어오면 return으로 하면...
         //이벤트리스너는 함수가 아니라서.. 이상하고
         // 차라리 이미 존재하지 않는 값이 들어왔을 경우로 한다.
         const i = todoList.findIndex(todo => todo.value == input.value );
-        if (i == -1){  // 해당 인덱스 값이 존재하지 않으면 추가
-            todoList.push({...item})  //객체 독립
-            ingList.push({...item}) // 여기에도 넣는다.       
-            input.value=''
-            renderList()
+        if (inputValue != ''){
+            // 한글로 된 문자열을 처음에 입력할 때, 이상하게도 
+            // 빈문자열이 입력되고 엔터를 친 것처럼 빈 요소가 추가된다.
+            // 이것을 방지하기 위해
+
+            if (i == -1){  // 해당 인덱스 값이 존재하지 않으면 추가
+                todoList.push({...item})  //객체 독립
+                ingList.push({...item}) // 여기에도 넣는다.       
+                input.value=''
+                renderList()
+            }
         }
     }    
 })
 
 function getTodo(){
-    let item = {value: input.value, class: 'normal'}
+    const inputValue = input.value.trim(); 
+    let item = {value: inputValue, class: 'normal'}
     // class값을 null로 하지 않고 넣어준다.
     const i = todoList.findIndex(todo => todo.value == input.value );
-    if (i == -1){ // 해당 인덱스 값이 존재하지 않으면 추가
-        todoList.push({...item})
-        ingList.push({...item})       
-        input.value=''
-        renderList()
+    if (inputValue != ''){
+        if (i == -1){ // 해당 인덱스 값이 존재하지 않으면 추가
+            todoList.push({...item})
+            ingList.push({...item})       
+            input.value=''
+            renderList()
+        }
     }
 }
 
@@ -204,9 +215,15 @@ function handleDeleteButtonClick(e) {
     // 인덱스로 접근하면 안되고, filter함수로 접근해야 된다.
 
     if(targetTodo){  // 삭제되는 객체가 존재하면
-        todoList = todoList.filter( todo => todo.value != key)
+        
         ingList = ingList.filter( todo => todo.value != key)
         doneList = doneList.filter( todo => todo.value != key)
+        // key값은 liTag로 부터 받아오고, liTag는 todoList로부터 
+        // 만들어진다. 그래서 todoList의 요소부터 지워버리면,
+        // 어떤 liTag는 key값을 받지 못하게 된다. 
+        //그래서 null인 키값으로 filter를 하니, 빈값이 나올 수 있다.
+        //그래서 todoList filter를 맨마지막에 해서, 언전하게 한다.
+        todoList = todoList.filter( todo => todo.value != key)
         // list.filter로 된 겻은 새로운 배열을 반환하는 것이고,
         // 기존 배열을 변화시키는 것이 아니다.
 
