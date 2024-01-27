@@ -52,10 +52,10 @@ function indicator(e){
 // 유저가 값을 입력한다.
 // + 버튼을 클릭하면, 할 일이 추가된다. (기존 진행중으로 등록됨)
 // delete버튼을 클릭하면, 할일이 삭제된다.
-// check버튼을 클릭하면, 할일에 밑줄이 가고, 끝남으로 변화된다.
+// check버튼을 클릭하면, 할일에 밑줄이 가고, 완료으로 변화된다.
 //(만약 다시 check버튼을 누르면, 밑줄이 사라지고, 진행중으로 변한다)
-//'진행중', '끝남' 탭을 누르면, 언더바(음영)가 이동한다.
-// 끝남 탭은 끝난 아이템만, 진행중 탭은 진행중인 아이템만 보여준다.
+//'진행중', '완료' 탭을 누르면, 언더바(음영)가 이동한다.
+// 완료 탭은 끝난 아이템만, 진행중 탭은 진행중인 아이템만 보여준다.
 // 전체 탭을 누르면 다시 전체 아이템으로 돌아온다.
 
 //1. 유저 값 입력을 받아오기. input태그, 버튼 태그를 받아옴
@@ -110,8 +110,8 @@ function renderList(){
         liTag.innerHTML =`
             <div class="todo ${todo.class}">${todo.value}</div>
             <div>
-                <button class="check">check</button>
-                <button class="delete">delete</button>
+                <button class="check">완료</button>
+                <button class="delete">삭제</button>
             </div>
         `;
         ulTag.appendChild(liTag);  
