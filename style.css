@@ -87,9 +87,14 @@ input{
 .tab{
     padding: 1em;
     font-size: 27px;
+    border-top: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    margin-right: 5px;
 }
 .bold{
-    font-weight: bold;
+    font-weight: bold;    
 }
 
 .todo{
@@ -112,5 +117,15 @@ input{
 }
 div .completed{
     color: rgb(252, 108, 108);
+}
+
+#all{
+    background-color: rgb(169, 228, 228);
+}
+#done{
+    background-color: rgb(242, 140, 222);
+}
+#ing{
+    background-color: rgb(138, 195, 127);
 }
 
