@@ -4,6 +4,7 @@ const tabs = document.querySelectorAll('.tab')
 let todoList=[];
 let ingList=[];
 let doneList=[];
+let checked = true;
 const input = document.querySelector('input')
 const addButton = document.querySelector('#add')
 
@@ -108,35 +109,35 @@ const task = document.querySelector('.task')
 function renderList(){
      // 기존 ul 태그를 제거
     const existingUlTag = task.querySelector('ul');
-    if (existingUlTag) {
-        existingUlTag.remove();
-        //혹은 task.removeChild(existingUlTag)
-    }
+    task.innerHTML ='';
+    // if (existingUlTag) {
+    //     existingUlTag.remove();
+    //     //혹은 task.removeChild(existingUlTag)
+    // }
 
     // 새로운 ul 태그 생성
     const ulTag = document.createElement('ul');
     ulTag.style.paddingLeft ='0px';
     //확실하게 다시한번 task 초기화(비워둔다)
-    task.innerHTML ='';
+    
 
     todoList.forEach( (todo) =>{
         const liTag = document.createElement('li');
-        liTag.classList.add('todos');
+        liTag.classList.add('todo');
         if (todo.class =='completed'){
             liTag.classList.add('completed');
-            // console.log(`${todo.value} tag에 completed 추가됨`)
         }        
         liTag.setAttribute('data-key', todo.value);
         // console.log(liTag)
         liTag.innerHTML =`
-            <div class="todo ${todo.class}">${todo.value}</div>
+            <div class="item ${todo.class}">${todo.value}</div>
             <div>
                 <button class="check">완료</button>
                 <button class="delete">삭제</button>
             </div>
         `;
         // liTag에도 이벤트리스너를 달아서, check 반응하게만든다.
-        liTag.addEventListener('click', handleCheckButtonClick);
+        // liTag.addEventListener('click', handleCheckButtonClick);
         ulTag.appendChild(liTag);  
         
     });
@@ -163,9 +164,11 @@ function renderList(){
 
 // Check 버튼 클릭 시 처리
 function handleCheckButtonClick(e) {
-    const button = e.currentTarget;
-    const liTag = button.closest('li');
-    const key = liTag.getAttribute('data-key');
+    const currentButton = e.currentTarget;
+    const currentLiTag = currentButton.closest('li');
+    const currentDiv = currentLiTag.querySelector('div')
+    console.log(currentDiv)
+    const key = currentLiTag.getAttribute('data-key');
     console.log("key: ", key)
     let todoIndex; 
     let ingIndex;
@@ -175,6 +178,19 @@ function handleCheckButtonClick(e) {
     todoIndex = todoList.findIndex(todo => todo.value ==key);
     ingIndex = ingList.findIndex(todo => todo.value == key);
     // findIndex메소드는 없으면 -1을 반환한다.
+
+
+    //이미 완료로 된 상태에서 다시 눌렸을 경우
+    if( targetTodo.class == 'completed'){
+        currentLiTag.classList.remove('completed');
+        currentDiv.classList.remove('completed');
+        targetTodo.class = 'normal';
+        doneList = doneList.filter(todo => todo.value != key)
+        ingList.push(targetTodo)
+        return;
+    }
+
+
     if(todoIndex != -1){
         targetTodo.class ='completed';
 
@@ -188,7 +204,7 @@ function handleCheckButtonClick(e) {
         ingList.splice(ingIndex, 1)
     }
 
-    renderList();
+    renderList(checked);
 }
 
 
@@ -259,11 +275,13 @@ function renderSpecificList(type){
     if(list.length >0){
         list.forEach( (todo) =>{
             const liTag = document.createElement('li');
-            liTag.classList.add('todos');
-            //아래 불필요한 것 삭제함//   
+            liTag.classList.add('todo'); 
+            if (todo.class =='completed'){
+            liTag.classList.add('completed');
+            }
             // 버튼들은 안 만든다.  
             liTag.innerHTML =`
-                <div class="todo ${todo.class}">${todo.value}</div>
+                <div class="item ${todo.class}">${todo.value}</div>
             `;
             ulTag.appendChild(liTag);  
             
