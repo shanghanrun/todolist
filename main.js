@@ -86,6 +86,10 @@ input.addEventListener('keyup', function(e){
                 renderList()
             }
         }
+         //입력하는 순간 indicator가 '모두'를 가리키게 한다.
+        // indicator는 해당탭을 클릭할 때 작동하므로
+        const allTab = document.querySelector('#all')
+        allTab.click();
     }    
 })
 
@@ -100,8 +104,10 @@ function getTodo(){
             ingList.push({...item})       
             input.value=''
             renderList()
-        }
+        }        
     }
+    const allTab = document.querySelector('#all')
+    allTab.click();
 }
 
 const task = document.querySelector('.task')
