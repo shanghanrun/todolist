@@ -195,7 +195,7 @@ function handleCheckButtonClick(e) {
     let todoIndex; 
     let ingIndex;
     //
-    // todoList에서 해당 key 값을 가진 객체를 찾는다.
+    //! 각각의 List에서 해당 key 값을 가진 객체를 찾는다.
     const targetTodo = todoList.find(todo => todo.value == key);
     todoIndex = todoList.findIndex(todo => todo.value ==key);
     ingIndex = ingList.findIndex(todo => todo.value == key);
