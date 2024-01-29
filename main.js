@@ -13,37 +13,37 @@ tabs.forEach( tab=>
      indicator(e)));
 
 function indicator(e){
-    console.log(e.currentTarget)    
+    console.log(e.target)    
     // 이전에 bold로 설정된 탭에서 bold 클래스를 제거합니다.
     if(document.querySelector('.bold')){
         document.querySelector('.bold').classList.remove('bold');
     }
     
     // 현재 클릭된 탭에 bold 클래스를 추가하여 볼드체로 설정합니다.
-    e.currentTarget.classList.add('bold');
+    e.target.classList.add('bold');
 
     underline.style.borderRadius = '10px';
 
-    underline.style.left = e.currentTarget.offsetLeft + 'px';
+    underline.style.left = e.target.offsetLeft + 'px';
     // console.log(underline.style.left);
 
-    underline.style.top = e.currentTarget.offsetTop  + 'px';
+    underline.style.top = e.target.offsetTop  + 'px';
     // console.log(underline.style.top);
 
-    underline.style.width = e.currentTarget.offsetWidth  + 'px';
+    underline.style.width = e.target.offsetWidth  + 'px';
 
     // 해당 탭의 List를 보여주기
-    if(e.currentTarget.id == 'all'){ 
-        // e.currentTarget.class =='all'로 하면 오류
-        // e.currentTarget.class.includes('all')도 오류
-        // e.currentTarget.classList.includes('all')해도 오류
+    if(e.target.id == 'all'){ 
+        // e.target.class =='all'로 하면 오류
+        // e.target.class.includes('all')도 오류
+        // e.target.classList.includes('all')해도 오류
         // 그 이유는 DOMTokenList는 '배열유사객체' contains()로 접근해야 된다.
         //그런데, class보다 id로 확실하게 분리하기로 했다.
         
         renderList();
-    } else if(e.currentTarget.id == 'ing'){
+    } else if(e.target.id == 'ing'){
         renderSpecificList('ingList');  //문자열을 인자로 보낸다.
-    } else if(e.currentTarget.id == 'done'){
+    } else if(e.target.id == 'done'){
         renderSpecificList('doneList')
     }    
 }
@@ -170,7 +170,7 @@ function renderList(){
 
 // Check 버튼 클릭 시 처리
 function handleCheckButtonClick(e) {
-    const currentButton = e.currentTarget;
+    const currentButton = e.target;
     const currentLiTag = currentButton.closest('li');
     const currentDiv = currentLiTag.querySelector('div')
     console.log(currentDiv)
@@ -216,7 +216,7 @@ function handleCheckButtonClick(e) {
 
 // Delete 버튼 클릭 시 처리
 function handleDeleteButtonClick(e) {
-    const button = e.currentTarget;
+    const button = e.target;
     const liTag = button.closest('li');
     const key = liTag.getAttribute('data-key'); 
      
