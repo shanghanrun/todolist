@@ -45,7 +45,23 @@ function indicator(e){
         renderSpecificList('ingList');  //문자열을 인자로 보낸다.
     } else if(e.target.id == 'done'){
         renderSpecificList('doneList')
-    }    
+    }  
+    
+    //오디오 플레이
+    // audio.removeAttribute('controls')
+    const audio = document.querySelector('#audio1');
+    const audioList =['세월이 가면.mp3', 'Never ending story.mp3', '이별의 그늘.mp3'];
+    let song
+    if (e.target.id == 'all') song =audioList[0]
+    if (e.target.id =='done') song =audioList[1]
+    if (e.target.id =='ing') song =audioList[2];
+    audio.src = `audio/${song}`
+    audio.play();
+
+    setTimeout(() => {
+       audio.setAttribute('controls', '') 
+    }, 8000);
+    // audio.setAttribute('controls', '')
 }
 
 
