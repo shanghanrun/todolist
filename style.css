@@ -1,11 +1,11 @@
-body{
-    margin:0;
+body {
+    margin: 0;
     background-image: url('image/workplace.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.container{
+.container {
     background-color: rgb(255, 251, 251, 0.7);
     min-height: 80vh;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -13,21 +13,24 @@ body{
     margin: 100px;
     margin-right: 200px;
     border-radius: 20px;
-    
+
     padding: 20px;
 }
-.task-area{
+
+.task-area {
     margin-top: 10px;
     border: 4px solid rgb(130, 130, 255);
     border-radius: 10px;
     padding: 2px;
     margin-bottom: 10px;
 }
-h1{
+
+h1 {
     padding-top: 20px;
     font-size: 60px;
 }
-input{
+
+input {
     height: 40px;
     width: 400px;
     border-radius: 5px;
@@ -37,7 +40,8 @@ input{
     margin-top: 20px;
     margin-bottom: 20px;
 }
-#add{
+
+#add {
     margin: 10px;
     height: 40px;
     width: 40px;
@@ -45,7 +49,8 @@ input{
     font-weight: bold;
     background-color: rgb(70, 118, 251);
 }
-.check{
+
+.check {
     /* margin: 10px; */
     height: 30px;
     width: 70px;
@@ -54,7 +59,8 @@ input{
     background-color: rgb(133, 255, 133, 0.6);
     font-weight: 500;
 }
-.delete{
+
+.delete {
     /* margin: 10px; */
     margin-left: 10px;
     height: 30px;
@@ -64,27 +70,29 @@ input{
     background-color: rgb(249, 95, 133, 0.8);
     font-weight: 500;
 }
-#underline{
+
+#underline {
     position: absolute;
-    padding:0;
-    width:0;
-    top:10;
-    left:1;
+    padding: 0;
+    width: 0;
+    top: 10;
+    left: 1;
     height: 98px;
     width: 10px;
     background-color: rgba(6, 144, 250, 0.3);
-    transition:0.4s;
+    transition: 0.4s;
     border-top-left-radius: 10px;
 }
 
-.task-tabs{
-    display:flex;
+.task-tabs {
+    display: flex;
     justify-content: column;
     border-bottom: 1px solid lightgray;
-    position:relative;
+    position: relative;
     margin-bottom: 10px;
 }
-.tab{
+
+.tab {
     padding: 1em;
     font-size: 27px;
     border-top: 1px solid lightgray;
@@ -93,11 +101,12 @@ input{
     border-top-left-radius: 10px;
     margin-right: 5px;
 }
-.bold{
-    font-weight: bold;    
+
+.bold {
+    font-weight: bold;
 }
 
-.todo{
+.todo {
     display: flex;
     justify-content: space-between;
     padding: 1em;
@@ -107,25 +116,45 @@ input{
     border-bottom-left-radius: 20px;
     margin-bottom: 10px;
 }
-.item{
-    font-weight:700;
+
+.item {
+    font-weight: 700;
     font-size: 25px;
 }
-.todo.completed{
+
+.todo.completed {
     /* text-decoration: line-through; */
     background-color: rgb(191, 197, 251);
 }
-div .completed{
+
+div .completed {
     color: rgb(252, 108, 108);
 }
 
-#all{
+#all {
     background-color: rgb(169, 228, 228);
 }
-#done{
+
+#done {
     background-color: rgb(242, 140, 222);
 }
-#ing{
+
+#ing {
     background-color: rgb(138, 195, 127);
 }
 
+span {
+    padding-left: 60px;
+}
+
+#saveButton {
+    background-color: rgb(72, 250, 45);
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+#loadButton {
+    background-color: rgb(251, 95, 217);
+    font-size: 20px;
+    border-radius: 10px;
+}

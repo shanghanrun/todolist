@@ -1,10 +1,36 @@
+
+
 const underline = document.querySelector('#underline')
 
 const tabs = document.querySelectorAll('.tab')
-let todoList=[];
+let todoList=[];  // [{'value': 'str', 'class': 'normal'}, {}...]
 let ingList=[];
-let doneList=[];
+let doneList=[];  // [{'value': 'str', 'class': 'completed'}, {}...]
 let checked = true;
+
+const save = document.querySelector('#saveButton')
+save.addEventListener('click',function(){
+    let data = {
+        todoList: todoList,
+        ingList: ingList,
+        doneList: doneList
+    };
+    let jsonString = JSON.stringify(data);
+    let blob = new Blob([jsonString], {type: 'application/json'});
+    let fileName = `mytodo.json`;
+
+    // Blob 객체에 대한 URL을 생성합니다.
+    let url = window.URL.createObjectURL(blob);
+
+    // 가상의 링크를 만들어서 클릭 이벤트를 발생시킵니다.
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+
+    // 가상의 링크를 제거합니다.
+    window.URL.revokeObjectURL(url);
+} )
 const input = document.querySelector('input')
 const addButton = document.querySelector('#add')
 
@@ -311,3 +337,84 @@ function renderSpecificList(type){
     }
     task.appendChild(ulTag);    
 }
+
+
+
+
+
+
+// 프로그램이 시작될 때 실행되는 함수
+window.onload = function() {
+    var load = document.querySelector('#loadButton')
+    load.addEventListener('click', function(){
+        loadTodoListFromFile();
+    })    
+};
+
+// 로컬 .json 파일에서 데이터를 읽어와서 todoList에 값을 넣어주는 함수
+function loadTodoListFromFile() {
+    // 파일 입력 태그를 만듭니다.
+    let input = document.createElement('input');
+    input.type = 'file';
+
+    // 파일이 선택되었을 때 실행되는 함수를 정의합니다.
+    input.onchange = function(event) {
+        let file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+
+            // 파일을 읽어온 후 실행되는 함수를 정의합니다.
+            reader.onload = function(event) {
+                var contents = event.target.result;
+                var data = JSON.parse(contents)
+                // 읽어온 파일의 내용을 파싱하여 
+                todoList = data.todoList || [];
+                ingList = data.ingList || [];
+                doneList = data.doneList || [];
+                renderList();
+            };
+
+            // 파일을 읽어옵니다.
+            reader.readAsText(file);
+        } else {
+            console.log("파일을 선택하지 않았습니다.");
+        }
+    };
+
+    // 파일 선택 다이얼로그를 엽니다.
+    input.click();
+}
+
+// // 프로그램이 시작될 때 실행되는 함수
+// 브라우저에서 로컬파일에 대한 자동접근을 차단해서 실행 안됨.
+// window.onload = function() {
+//     loadTodoListFromFile();
+// };
+
+// // 로컬 .json 파일에서 데이터를 읽어와서 todoList에 값을 넣어주는 함수
+// function loadTodoListFromFile() {
+//     // 파일 경로
+//     var filePath = 'd:/mytodo.json';
+
+//     // AJAX를 사용하여 파일을 비동기적으로 읽어옵니다.
+//     var xhr = new XMLHttpRequest();
+//     xhr.open('GET', filePath, true);
+//     xhr.onreadystatechange = function() {
+//         if (xhr.readyState === XMLHttpRequest.DONE) {
+//             if (xhr.status === 200) {
+//                 var contents = xhr.responseText;
+//                 var data = JSON.parse(contents)
+//                 todoList = data.todoList || [];
+//                 ingList = data.ingList || [];
+//                 doneList = data.doneList || [];
+//                 renderList();
+//             } else {
+//                 console.log('파일을 읽어오는 데 실패했습니다.');
+//             }
+//         }
+//     };
+//     xhr.send();
+// }
+
+
+
